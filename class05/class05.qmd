@@ -1,0 +1,109 @@
+---
+title: "Class 5: Data Visualization with ggplot"
+author: "Barry"
+format: pdf
+toc: true
+---
+
+# Our first plot
+
+R has base graphics
+
+```{r}
+head(cars)
+```
+
+```{r}
+plot(cars)
+```
+
+How would I plot this with `ggplot2`?
+NO!
+
+We need to install and load the ggplot2 package first.
+To install any package in R we use the `install.packages()` function.
+
+```{r}
+# install.packages("ggplot2")
+```
+
+Before I can use this package I need to load it with a `library()` call.
+
+```{r}
+library(ggplot2)
+ggplot(cars)
+```
+
+Every ggplot needs at least 3 layers:
+
+- **Data** (i.e. the data.frame we have),
+- **Aes** (the aesthetic mapping of our data to what we want to plot)
+- **Geoms** (How we want to plot this stuff!)
+
+```{r}
+ggplot(data=cars) +
+  aes(x=speed, y=dist) +
+  geom_point()
+```
+
+
+Add annother geom
+
+```{r}
+ggplot(data=cars) +
+  aes(x=speed, y=dist) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+
+## A more intresting plot
+
+First read data from online
+
+```{r}
+url <- "https://bioboot.github.io/bimm143_S20/class-material/up_down_expression.txt"
+genes <- read.delim(url)
+head(genes)
+```
+
+Q1. How many genes are in this dataset
+
+```{r}
+nrow(genes)
+```
+
+There are `r nrow(genes)` genes in this data set.
+
+
+```{r}
+p <- ggplot(genes) +
+  aes(x=Condition1, y=Condition2, col=State, names=Gene) +
+  geom_point()
+
+p
+```
+
+
+# Using plotly for interactive plots
+
+```{r}
+library(plotly)
+
+
+ggplotly(p)
+```
+## Try a different plot
+```{r}
+p2 <- ggplot(data=mpg) +
+  aes(x=displ, y=hwy, color=class,
+      shape=factor(cyl), names=model) + 
+  geom_point()
+
+p2
+```
+and plotly version
+
+```{r}
+ggplotly(p2)
+```
+
