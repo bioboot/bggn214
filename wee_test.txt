@@ -1,1 +1,3 @@
 Text from AWS for test sync
+
+Here we have a comment from aws
